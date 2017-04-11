@@ -36,6 +36,10 @@ public class PomMain {
   	   for(String scope:scopes){
   		 PomRewrite.addType(list, lastResult,scope);
   	   }
+  	   
+  	   //删除ManagementDependencies 中重复依赖 remove dup ManagementDependencies
+  	   lastResult = PomRewrite.removeManagementsDups(lastResult);
+
   	   //设置ManagementDependencies set ManagementDependencies
   	    PomRewrite.setManagementDependencies(parent.document,lastResult);
   	    // 写入文件 write to File
