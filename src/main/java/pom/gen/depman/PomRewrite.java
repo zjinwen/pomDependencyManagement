@@ -153,11 +153,13 @@ public class PomRewrite {
 		    		  if((version==null||version.equals(versionS))&&(scope==null||scope.equals(scopeS))){
 		    			  exist=true;
 		    			  break;
+		    		  }else{
+		    			  throw new RuntimeException(groupIdS+" "+artifactIdS+" has two versions");
 		    		  }
 		    	  }
 	    	  }
 	    	  if(!exist){
-	    		  list.add(e);
+	    		  list.add(e.createCopy());
 	    	  }
 	    	  
         }
@@ -191,7 +193,8 @@ public class PomRewrite {
 	public static void setManagementDependencies(Document document, List<Element>  ms){
 		  Element root = document.getRootElement();
 		  Element dm = root.element("dependencyManagement").element("dependencies");
-		  root.element("dependencyManagement").remove(dm);
+		  boolean success=root.element("dependencyManagement").remove(dm);
+		  if(!success)throw new RuntimeException("É¾³ýÔªËØÊ§°Ü");
 		  Element elemntNew = root.element("dependencyManagement").addElement("dependencies") ; 
 		  for(Element e:ms){
 			  elemntNew.add(e);

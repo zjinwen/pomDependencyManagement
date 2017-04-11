@@ -16,11 +16,13 @@ public class PomMain {
 	 */
 	public static void main(String[] args) throws DocumentException, IOException {
 		//设置项目目录 set project parent dir
-		PomRewrite.parentFile="D:\\workspace-master\\clearing";
+		//PomRewrite.parentFile="D:\\workspace-master\\clearing";
+		PomRewrite.parentFile="D:\\workspace-master\\exchange";
 		List<String> poms = PomRewrite.getDirs();
         PomRewrite parent=new PomRewrite(PomRewrite.getPomFile(null));
         //删除ManagementDependencies 中重复依赖 remove dup ManagementDependencies
         List<Element> list = PomRewrite.removeManagementsDups(parent.getManagementDependencies());
+       
         //根据 scope添加  add by scope firt compile last test.
    	    String[] scopes=new String[]{null,"provided","runtime","system","test"};
         for(String scope:scopes){
