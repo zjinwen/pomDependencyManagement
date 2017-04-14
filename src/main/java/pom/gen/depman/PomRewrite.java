@@ -46,7 +46,7 @@ public class PomRewrite {
 	
 	
 	public void testDup(){
-		  //²éÕÒÖØ¸´µÄ
+		  //æŸ¥æ‰¾é‡å¤çš„
 		  List<Element> dependencies = getDependencies();
 	      int i=0;
 	      int size=dependencies.size();
@@ -60,8 +60,8 @@ public class PomRewrite {
 	    	    	     String groupIdSub= text(dSub,"groupId");
 	    		    	 String artifactIdSub=  text(dSub,"artifactId");
 	    		    	 if(groupId.equals(groupIdSub)&&artifactId.equals(artifactIdSub)){
-	    		    		 System.out.println(this.fileName+" error dup¡£¡£"+countDup);
-	    		    		 System.out.println("error dup¡£¡£"+countDup);
+	    		    		 System.out.println(this.fileName+" error dupã€‚ã€‚"+countDup);
+	    		    		 System.out.println("error dupã€‚ã€‚"+countDup);
 	    		    		  System.out.print(text(d,"groupId") +" ");
 	    			    	  System.out.print(text(d,"artifactId") +" ");
 	    			    	  System.out.print(text(d,"version")+" "+text(dSub,"version") +" ");
@@ -73,8 +73,8 @@ public class PomRewrite {
 	      }
 	     
 	      if(countDup>0){
-	    	  System.out.println("ÓĞÖØ¸´µÄ¡£¡£"+countDup);
-              throw new RuntimeException("ÓĞÖØ¸´µÄ¡£¡£"+countDup);
+	    	  System.out.println("æœ‰é‡å¤çš„ã€‚ã€‚"+countDup);
+              throw new RuntimeException("æœ‰é‡å¤çš„ã€‚ã€‚"+countDup);
 	      }
 	}
 	
@@ -116,7 +116,7 @@ public class PomRewrite {
 	
 
 	public static List<String> getDirs() {
-		if(parentFile==null)throw new RuntimeException("Ã»ÓĞÉèÖÃparent File ");
+		if(parentFile==null)throw new RuntimeException("æ²¡æœ‰è®¾ç½®parent File ");
 		File dir=new File(parentFile);
 	      File[] dirs = dir.listFiles();
 	      List<String> poms=new ArrayList<String>();
@@ -194,7 +194,7 @@ public class PomRewrite {
 		  Element root = document.getRootElement();
 		  Element dm = root.element("dependencyManagement").element("dependencies");
 		  boolean success=root.element("dependencyManagement").remove(dm);
-		  if(!success)throw new RuntimeException("É¾³ıÔªËØÊ§°Ü");
+		  if(!success)throw new RuntimeException("åˆ é™¤å…ƒç´ å¤±è´¥");
 		  Element elemntNew = root.element("dependencyManagement").addElement("dependencies") ; 
 		  for(Element e:ms){
 			  elemntNew.add(e);
@@ -240,7 +240,7 @@ public class PomRewrite {
        		 };
        		 managements.add(copy);
        	 }else{
-       		 System.out.println("ÒÑ¾­°üº¬");
+       		 System.out.println("å·²ç»åŒ…å«");
        	 }
         }
 	}

@@ -15,38 +15,38 @@ public class PomMain {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws DocumentException, IOException {
-		//ÉèÖÃÏîÄ¿Ä¿Â¼ set project parent dir
+		//è®¾ç½®é¡¹ç›®ç›®å½• set project parent dir
 		//PomRewrite.parentFile="D:\\workspace-master\\clearing";
 		PomRewrite.parentFile="D:\\workspace-master\\exchange";
 		List<String> poms = PomRewrite.getDirs();
         PomRewrite parent=new PomRewrite(PomRewrite.getPomFile(null));
-        //É¾³ıManagementDependencies ÖĞÖØ¸´ÒÀÀµ remove dup ManagementDependencies
+        //åˆ é™¤ManagementDependencies ä¸­é‡å¤ä¾èµ– remove dup ManagementDependencies
         List<Element> list = PomRewrite.removeManagementsDups(parent.getManagementDependencies());
        
-        //¸ù¾İ scopeÌí¼Ó  add by scope firt compile last test.
+        //æ ¹æ® scopeæ·»åŠ   add by scope firt compile last test.
    	    String[] scopes=new String[]{null,"provided","runtime","system","test"};
         for(String scope:scopes){
 	        for(String file:poms){
 	        	PomRewrite.addToDm(file, list,scope);
 	        }
         }
-      //¸ù¾İ group name ÅÅĞò order by Name
+      //æ ¹æ® group name æ’åº order by Name
         list=PomRewrite.orderByName(list);
        
-  	   //¸ù¾İ scopeÅÅĞò order by scope
+  	   //æ ¹æ® scopeæ’åº order by scope
         List<Element> lastResult=new ArrayList<Element>(list.size());
   	   for(String scope:scopes){
   		 PomRewrite.addType(list, lastResult,scope);
   	   }
   	   
-  	   //É¾³ıManagementDependencies ÖĞÖØ¸´ÒÀÀµ remove dup ManagementDependencies
+  	   //åˆ é™¤ManagementDependencies ä¸­é‡å¤ä¾èµ– remove dup ManagementDependencies
   	   lastResult = PomRewrite.removeManagementsDups(lastResult);
 
-  	   //ÉèÖÃManagementDependencies set ManagementDependencies
+  	   //è®¾ç½®ManagementDependencies set ManagementDependencies
   	    PomRewrite.setManagementDependencies(parent.document,lastResult);
-  	    // Ğ´ÈëÎÄ¼ş write to File
+  	    // å†™å…¥æ–‡ä»¶ write to File
   	    PomRewrite.writeToFile(parent.document,"output.xml");
-        ///É¾³ı×Ómodule versions, del module version
+        ///åˆ é™¤å­module versions, del module version
         for(String file:poms){
         	 PomRewrite.removeVersion(file);
 	    }
